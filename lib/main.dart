@@ -476,6 +476,7 @@ class _HomeContentState extends State<HomeContent> {
   
   // 產品數據
   List<dynamic> _latestProducts = [];
+  List<dynamic> _specialProducts = [];
   List<dynamic> _popularProducts = [];
   
   @override
@@ -495,12 +496,14 @@ class _HomeContentState extends State<HomeContent> {
       final results = await Future.wait([
         _apiService.getHomeBanners(),
         _apiService.getLatestProducts(),
-        _apiService.getPopularProducts(),
+        _apiService.getSpecialProducts(),
+        _apiService.getBestsellerProducts(),
       ]);
       
       final bannerResponse = results[0];
       final latestResponse = results[1];
-      final popularResponse = results[2];
+      final specialResponse = results[2];
+      final bestsellerResponse = results[3];
       
       setState(() {
         _isLoading = false;
@@ -515,14 +518,22 @@ class _HomeContentState extends State<HomeContent> {
           _latestProducts = latestResponse['latest_products'];
         } else if (latestResponse.containsKey('products')) {
           _latestProducts = latestResponse['products'];
-        }
+        }        
         
-        // 解析熱門產品數據
-        if (popularResponse.containsKey('popular_products')) {
-          _popularProducts = popularResponse['popular_products'];
-        } else if (popularResponse.containsKey('products')) {
-          _popularProducts = popularResponse['products'];
+        // 解析特價產品數據
+        if (specialResponse.containsKey('special_products')) {
+          _specialProducts = specialResponse['special_products'];
+        } else if (specialResponse.containsKey('products')) {
+          _specialProducts = specialResponse['products'];
         }
+  
+        // 解析暢銷產品數據
+        if (bestsellerResponse.containsKey('bestseller_products')) {
+          _popularProducts = bestsellerResponse['bestseller_products'];
+        } else if (bestsellerResponse.containsKey('products')) {
+          _popularProducts = bestsellerResponse['products'];
+        }
+
       });
     } catch (e) {
       setState(() {
@@ -669,6 +680,44 @@ class _HomeContentState extends State<HomeContent> {
                         itemCount: _latestProducts.length > 8 ? 8 : _latestProducts.length,
                         itemBuilder: (context, index) {
                           final product = _latestProducts[index];
+                          return ProductCard(
+                            product: product,
+                            onTap: () => _showProductDetails(product),
+                          );
+                        },
+                      ),
+                    ],
+                    
+                    const SizedBox(height: 16),
+                    
+                    // 特價產品
+                    if (_specialProducts.isNotEmpty) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Text(
+                            '特價產品',
+                            style: TextStyle(
+                              fontSize: TextSizeConfig.calculateTextSize(18),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.65,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                        ),
+                        itemCount: _specialProducts.length > 8 ? 8 : _specialProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = _specialProducts[index];
                           return ProductCard(
                             product: product,
                             onTap: () => _showProductDetails(product),

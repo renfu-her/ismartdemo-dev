@@ -108,6 +108,11 @@ class ApiService {
     return _get('gws_appproducts_special&limit=8');
   }
   
+  // 獲取熱銷產品
+  Future<Map<String, dynamic>> getBestsellerProducts() async {
+    return _get('gws_appproducts_bestseller&limit=8');
+  }
+  
   // 獲取首頁橫幅數據
   Future<Map<String, dynamic>> getHomeBanners() async {
     return _get('gws_appservice/allHomeBanner');
