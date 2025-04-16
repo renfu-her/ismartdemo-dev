@@ -150,6 +150,21 @@ class _ProductListPageState extends State<ProductListPage> {
     }
   }
   
+  String _formatPrice(String? price) {
+    if (price == null || price.isEmpty) return '';
+    
+    // 移除所有非數字字符
+    String numericPrice = price.replaceAll(RegExp(r'[^\d.]'), '');
+    
+    try {
+      // 轉換為整數
+      int priceValue = double.parse(numericPrice).round();
+      return '\$$priceValue';
+    } catch (e) {
+      return '\$$price';
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -372,7 +387,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                 // 如果有特價，顯示原價（加上橫線）和特價
                                 if (product['special'] != null && product['special'] != false)
                                   Text(
-                                    '${product['price']}',
+                                    _formatPrice(product['price']),
                                     style: const TextStyle(
                                       fontSize: 10.0,
                                       color: Colors.grey,
@@ -381,9 +396,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                   ),
                                 // 顯示價格（如果有特價則顯示特價，否則顯示原價）
                                 Text(
-                                  product['special'] != null && product['special'] != false
-                                      ? '${product['special']}'
-                                      : '${product['price']}',
+                                  _formatPrice(product['special']),
                                   style: const TextStyle(
                                     fontSize: 14.0,
                                     color: Colors.red,

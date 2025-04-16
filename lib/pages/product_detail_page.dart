@@ -591,7 +591,7 @@ $productName
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '${_productData['price']}',
+                                                  _formatPriceString(_productData['price']),
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.grey,
@@ -601,7 +601,7 @@ $productName
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${_productData['special']}',
+                                                  _formatPriceString(_productData['special']),
                                                   style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.bold,
@@ -1209,11 +1209,20 @@ $productName
   }
 
   String _formatPrice(double price) {
-    double roundedPrice = (price * 100).round() / 100;
-    if (roundedPrice == roundedPrice.toInt()) {
-      return 'NT\$${roundedPrice.toInt()}';
+    return '\$${price.round()}';
+  }
+
+  String _formatPriceString(String? price) {
+    if (price == null || price.isEmpty) return '';
+    
+    String numericPrice = price.replaceAll(RegExp(r'[^\d.]'), '');
+    
+    try {
+      int priceValue = double.parse(numericPrice).round();
+      return '\$$priceValue';
+    } catch (e) {
+      return '\$$price';
     }
-    return 'NT\$${roundedPrice.toStringAsFixed(2)}';
   }
 
   String _formatSpecialCharacters(String text) {

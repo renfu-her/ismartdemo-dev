@@ -1003,6 +1003,22 @@ class ProductCard extends StatelessWidget {
     this.onTap,
   });
 
+  // 格式化價格顯示
+  String _formatPrice(String? price) {
+    if (price == null || price.isEmpty) return '';
+    
+    // 移除所有非數字字符
+    String numericPrice = price.replaceAll(RegExp(r'[^\d.]'), '');
+    
+    try {
+      // 轉換為整數
+      int priceValue = double.parse(numericPrice).round();
+      return '\$$priceValue';
+    } catch (e) {
+      return '\$$price';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 檢查產品價格是否為0或空字符串
@@ -1100,7 +1116,7 @@ class ProductCard extends StatelessWidget {
                                 // 如果有特價，顯示原價（加上橫線）和特價
                                 if (product['special'] != null && product['special'] != false)
                                   Text(
-                                    '${product['price']}',
+                                    _formatPrice(product['price']),
                                     style: TextStyle(
                                       fontSize: TextSizeConfig.calculateTextSize(10),
                                       color: Colors.grey,
@@ -1111,8 +1127,8 @@ class ProductCard extends StatelessWidget {
                                 // 顯示價格（如果有特價則顯示特價，否則顯示原價）
                                 Text(
                                   product['special'] != null && product['special'] != false
-                                      ? '${product['special']}'
-                                      : '${product['price']}',
+                                      ? _formatPrice(product['special'])
+                                      : _formatPrice(product['price']),
                                   style: TextStyle(
                                     fontSize: TextSizeConfig.calculateTextSize(14),
                                     color: Colors.red,
