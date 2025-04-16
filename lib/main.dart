@@ -1095,6 +1095,7 @@ class ProductCard extends StatelessWidget {
                         child: !isPriceZeroOrEmpty && product['price'] != null
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 // 如果有特價，顯示原價（加上橫線）和特價
                                 if (product['special'] != null && product['special'] != false)
@@ -1105,6 +1106,7 @@ class ProductCard extends StatelessWidget {
                                       color: Colors.grey,
                                       decoration: TextDecoration.lineThrough,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 // 顯示價格（如果有特價則顯示特價，否則顯示原價）
                                 Text(
@@ -1116,6 +1118,7 @@ class ProductCard extends StatelessWidget {
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             )
