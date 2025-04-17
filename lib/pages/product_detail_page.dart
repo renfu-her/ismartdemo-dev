@@ -28,6 +28,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   double _basePrice = 0.0;
   double _finalPrice = 0.0;
   bool _isPriceZero = false;
+  bool _isPriceDisabled = false;
   bool _isFavorite = false;
   String _currentImage = '';
   int _currentImageIndex = 0;
@@ -119,6 +120,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       _basePrice = 0.0;
       _finalPrice = 0.0;
       _isPriceZero = true;
+    }
+    
+    if (_productData['dis_price'] != null) {
+      _isPriceDisabled = _productData['dis_price'] == "1";
     }
   }
 
@@ -409,7 +414,7 @@ $productName
       appBar: AppBar(
         title: const Text('產品明細'),
         actions: [
-          if (!_isPriceZero)
+          if (!_isPriceZero && !_isPriceDisabled)
             Consumer<UserService>(
               builder: (context, userService, child) {
                 _isFavorite = userService.isLoggedIn && userService.isFavorite(
@@ -571,7 +576,7 @@ $productName
                                     ),
                                     const SizedBox(height: 16),
 
-                                    if (!_isPriceZero)
+                                    if (!_isPriceZero && !_isPriceDisabled)
                                       Row(
                                         children: [
                                           Text(
@@ -668,7 +673,7 @@ $productName
 
                                 const SizedBox(height: 24),
 
-                                if (!isOutOfStock && !_isPriceZero)
+                                if (!isOutOfStock && !_isPriceZero && !_isPriceDisabled)
                                   Row(
                                     children: [
                                       const Text(
@@ -782,7 +787,7 @@ $productName
                     ),
                   ),
 
-                  if (!_isPriceZero)
+                  if (!_isPriceZero && !_isPriceDisabled)
                     Container(
                       color: Colors.white,
                       child: SafeArea(

@@ -478,6 +478,19 @@ class _HomeContentState extends State<HomeContent> {
   List<dynamic> _latestProducts = [];
   List<dynamic> _specialProducts = [];
   List<dynamic> _popularProducts = [];
+  List<dynamic> _featuredProducts = [];
+  
+  // 標題數據
+  String _latestTitle = '最新產品';
+  String _specialTitle = '特價產品';
+  String _popularTitle = '熱門產品';
+  String _featuredTitle = '精選產品';
+  
+  // 狀態數據
+  bool _latestStatus = true;
+  bool _specialStatus = true;
+  bool _popularStatus = true;
+  bool _featuredStatus = true;
   
   @override
   void initState() {
@@ -498,12 +511,14 @@ class _HomeContentState extends State<HomeContent> {
         _apiService.getLatestProducts(),
         _apiService.getSpecialProducts(),
         _apiService.getBestsellerProducts(),
+        _apiService.getFeaturedProducts(),
       ]);
       
       final bannerResponse = results[0];
       final latestResponse = results[1];
       final specialResponse = results[2];
       final bestsellerResponse = results[3];
+      final featuredResponse = results[4];
       
       setState(() {
         _isLoading = false;
@@ -518,7 +533,7 @@ class _HomeContentState extends State<HomeContent> {
           _latestProducts = latestResponse['latest_products'];
         } else if (latestResponse.containsKey('products')) {
           _latestProducts = latestResponse['products'];
-        }        
+        }
         
         // 解析特價產品數據
         if (specialResponse.containsKey('special_products')) {
@@ -533,7 +548,47 @@ class _HomeContentState extends State<HomeContent> {
         } else if (bestsellerResponse.containsKey('products')) {
           _popularProducts = bestsellerResponse['products'];
         }
-
+        
+        // 解析精選產品數據
+        if (featuredResponse.containsKey('featured_products')) {
+          _featuredProducts = featuredResponse['featured_products'];
+        } else if (featuredResponse.containsKey('products')) {
+          _featuredProducts = featuredResponse['products'];
+        }
+        
+        // 解析標題
+        if (latestResponse.containsKey('home_title')) {
+          _latestTitle = latestResponse['home_title'];
+        }
+        
+        if (specialResponse.containsKey('home_title')) {
+          _specialTitle = specialResponse['home_title'];
+        }
+        
+        if (bestsellerResponse.containsKey('home_title')) {
+          _popularTitle = bestsellerResponse['home_title'];
+        }
+        
+        if (featuredResponse.containsKey('home_title')) {
+          _featuredTitle = featuredResponse['home_title'];
+        }
+        
+        // 解析狀態
+        if (latestResponse.containsKey('home_status')) {
+          _latestStatus = latestResponse['home_status'] == "1";
+        }
+        
+        if (specialResponse.containsKey('home_status')) {
+          _specialStatus = specialResponse['home_status'] == "1";
+        }
+        
+        if (bestsellerResponse.containsKey('home_status')) {
+          _popularStatus = bestsellerResponse['home_status'] == "1";
+        }
+        
+        if (featuredResponse.containsKey('home_status')) {
+          _featuredStatus = featuredResponse['home_status'] == "1";
+        }
       });
     } catch (e) {
       setState(() {
@@ -653,12 +708,12 @@ class _HomeContentState extends State<HomeContent> {
                     const SizedBox(height: 16),
                     
                     // 最新產品
-                    if (_latestProducts.isNotEmpty) ...[
+                    if (_latestProducts.isNotEmpty && _latestStatus) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
                           child: Text(
-                            '最新產品',
+                            _latestTitle,
                             style: TextStyle(
                               fontSize: TextSizeConfig.calculateTextSize(18),
                               fontWeight: FontWeight.bold,
@@ -691,12 +746,12 @@ class _HomeContentState extends State<HomeContent> {
                     const SizedBox(height: 16),
                     
                     // 特價產品
-                    if (_specialProducts.isNotEmpty) ...[
+                    if (_specialProducts.isNotEmpty && _specialStatus) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
                           child: Text(
-                            '特價產品',
+                            _specialTitle,
                             style: TextStyle(
                               fontSize: TextSizeConfig.calculateTextSize(18),
                               fontWeight: FontWeight.bold,
@@ -729,12 +784,12 @@ class _HomeContentState extends State<HomeContent> {
                     const SizedBox(height: 16),
                     
                     // 熱門產品
-                    if (_popularProducts.isNotEmpty) ...[
+                    if (_popularProducts.isNotEmpty && _popularStatus) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Center(
                           child: Text(
-                            '熱門產品',
+                            _popularTitle,
                             style: TextStyle(
                               fontSize: TextSizeConfig.calculateTextSize(18),
                               fontWeight: FontWeight.bold,
@@ -756,6 +811,44 @@ class _HomeContentState extends State<HomeContent> {
                         itemCount: _popularProducts.length > 8 ? 8 : _popularProducts.length,
                         itemBuilder: (context, index) {
                           final product = _popularProducts[index];
+                          return ProductCard(
+                            product: product,
+                            onTap: () => _showProductDetails(product),
+                          );
+                        },
+                      ),
+                    ],
+                    
+                    const SizedBox(height: 16),
+                    
+                    // 精選產品
+                    if (_featuredProducts.isNotEmpty && _featuredStatus) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Text(
+                            _featuredTitle,
+                            style: TextStyle(
+                              fontSize: TextSizeConfig.calculateTextSize(18),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.65,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                        ),
+                        itemCount: _featuredProducts.length > 8 ? 8 : _featuredProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = _featuredProducts[index];
                           return ProductCard(
                             product: product,
                             onTap: () => _showProductDetails(product),
@@ -1044,6 +1137,12 @@ class ProductCard extends StatelessWidget {
       // 如果價格為null，視為零價格
       isPriceZeroOrEmpty = true;
     }
+    
+    // 檢查是否禁用價格和購物車
+    bool isPriceDisabled = false;
+    if (product['dis_price'] != null) {
+      isPriceDisabled = product['dis_price'] == "1";
+    }
 
     return GestureDetector(
       onTap: () {
@@ -1105,10 +1204,10 @@ class ProductCard extends StatelessWidget {
                   // 底部區域：價格、愛心、購物車分為三欄
                   Row(
                     children: [
-                      // 價格佔據約50%的寬度 - 只有當價格不為零或空時才顯示
+                      // 價格佔據約50%的寬度 - 只有當價格不為零或空且未禁用時才顯示
                       Expanded(
                         flex: 5, // 5/10 = 50%
-                        child: !isPriceZeroOrEmpty && product['price'] != null
+                        child: !isPriceZeroOrEmpty && !isPriceDisabled && product['price'] != null
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
@@ -1140,8 +1239,8 @@ class ProductCard extends StatelessWidget {
                             )
                           : const SizedBox(),
                       ),
-                      // 愛心按鈕 - 只有當價格不為零或空時才顯示
-                      if (!isPriceZeroOrEmpty)
+                      // 愛心按鈕 - 只有當價格不為零或空且未禁用時才顯示
+                      if (!isPriceZeroOrEmpty && !isPriceDisabled)
                         Expanded(
                           flex: 2, // 2/10 = 20%
                           child: Consumer<UserService>(
@@ -1188,14 +1287,14 @@ class ProductCard extends StatelessWidget {
                             },
                           ),
                         ),
-                      // 根據價格顯示不同的圖標：價格為0顯示詳細資料圖標，否則顯示購物車圖標
+                      // 根據價格顯示不同的圖標：價格為0或禁用時顯示詳細資料圖標，否則顯示購物車圖標
                       Expanded(
                         flex: 3, // 3/10 = 30%
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           icon: FaIcon(
-                            isPriceZeroOrEmpty ? FontAwesomeIcons.circleInfo : FontAwesomeIcons.cartShopping,
+                            isPriceZeroOrEmpty || isPriceDisabled ? FontAwesomeIcons.circleInfo : FontAwesomeIcons.cartShopping,
                             size: 18,
                           ),
                           onPressed: () {
