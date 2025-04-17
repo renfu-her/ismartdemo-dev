@@ -145,56 +145,38 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   void _calculateFinalPrice() {
     _finalPrice = _basePrice;
+    double totalAdjustment = 0.0;
 
-    if (_productData.containsKey('options') &&
-        _productData['options'] is List) {
+    if (_productData.containsKey('options') && _productData['options'] is List) {
       for (var option in _productData['options']) {
         if (option['product_option_value'] is List) {
           for (var value in option['product_option_value']) {
-            if (_selectedOptions[option['name']] ==
-                value['product_option_value_id']) {
-              _applyPriceAdjustment(value);
-              break;
+            if (_selectedOptions[option['product_option_id']] == value['product_option_value_id']) {
+              String priceStr = value['cal_price']?.toString() ?? value['price']?.toString() ?? '0';
+              priceStr = priceStr.replaceAll(RegExp(r'[^\d.]'), '');
+              double adjustmentPrice = double.tryParse(priceStr) ?? 0.0;
+              String pricePrefix = value['cal_price_prefix'] ?? value['price_prefix'] ?? '+';
+              
+              switch (pricePrefix) {
+                case '+':
+                  totalAdjustment += adjustmentPrice;
+                  break;
+                case '-':
+                  totalAdjustment -= adjustmentPrice;
+                  break;
+                case '=':
+                  _finalPrice = adjustmentPrice;
+                  return;
+              }
             }
           }
         }
       }
     }
 
+    _finalPrice += totalAdjustment;
     if (_finalPrice < 0) {
       _finalPrice = 0;
-    }
-  }
-
-  void _applyPriceAdjustment(Map<String, dynamic> optionValue) {
-    if (optionValue.containsKey('price') &&
-        optionValue.containsKey('price_prefix')) {
-      String priceStr = optionValue['price'].toString().replaceAll(
-        RegExp(r'[^\d.]'),
-        '',
-      );
-      double optionPrice = 0.0;
-
-      try {
-        optionPrice = double.parse(priceStr);
-      } catch (e) {
-        print('選項價格轉換錯誤: $e');
-        return;
-      }
-
-      String prefix = optionValue['price_prefix'];
-
-      switch (prefix) {
-        case '+':
-          _finalPrice += optionPrice;
-          break;
-        case '-':
-          _finalPrice -= optionPrice;
-          break;
-        case '=':
-          _finalPrice = optionPrice;
-          break;
-      }
     }
   }
 
