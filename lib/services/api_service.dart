@@ -1238,4 +1238,17 @@ class ApiService {
       throw Exception('清空購物車失敗: ${e.toString()}');
     }
   }
+
+  // 取得服務與隱私條款內容
+  Future<String> getPrivacyTerms() async {
+    try {
+      final response = await _get('gws_appservice/privacyterms');
+      if (response.containsKey('information') && response['information'] is List && response['information'].isNotEmpty) {
+        return response['information'][0]['description'] ?? '';
+      }
+      return '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

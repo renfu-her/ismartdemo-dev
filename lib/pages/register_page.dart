@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/api_service.dart';
 import '../services/user_service.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -203,8 +204,51 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void _showPrivacyTermsDialog() {
-    // 實現顯示隱私政策的邏輯
+  void _showPrivacyTermsDialog() async {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return FutureBuilder<String>(
+          future: _apiService.getPrivacyTerms(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const AlertDialog(
+                title: Text('服務與隱私'),
+                content: SizedBox(
+                  height: 80,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              return const AlertDialog(
+                title: Text('服務與隱私'),
+                content: Text('無法載入條款內容，請稍後再試。'),
+              );
+            }
+            return AlertDialog(
+              title: const Text('服務與隱私'),
+              content: SizedBox(
+                width: double.maxFinite,
+                height: 400,
+                child: SingleChildScrollView(
+                  child: Html(
+                    data: snapshot.data ?? '',
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('關閉'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
