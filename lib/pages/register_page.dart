@@ -203,6 +203,10 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  void _showPrivacyTermsDialog() {
+    // 實現顯示隱私政策的邏輯
+  }
+
   @override
   Widget build(BuildContext context) {
     // 獲取 UserService 實例
@@ -621,30 +625,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           const TextSpan(text: '我已閱讀並同意 '),
                           WidgetSpan(
                             child: GestureDetector(
-                              onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('服務條款功能待實現')),
-                                );
-                              },
+                              onTap: _showPrivacyTermsDialog,
                               child: const Text(
-                                '服務條款',
-                                style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const TextSpan(text: ' 和 '),
-                          WidgetSpan(
-                            child: GestureDetector(
-                              onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('隱私政策功能待實現')),
-                                );
-                              },
-                              child: const Text(
-                                '隱私政策',
+                                '服務與隱私',
                                 style: TextStyle(
                                   color: Colors.purple,
                                   fontWeight: FontWeight.bold,
