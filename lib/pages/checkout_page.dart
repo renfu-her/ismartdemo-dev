@@ -342,7 +342,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
             // 2. 確認收件地址
             _buildSectionTitle('2. 確認收件地址'),
             const SizedBox(height: 8),
-            _buildAddressCard(),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildAddressCard(),
+                ),
+              ],
+            ),
             const SizedBox(height: 24),
             
             // 3. 確認訂單內容
@@ -555,6 +561,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  ),
+                  // 重新整理按鈕
+                  TextButton.icon(
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('重新整理'),
+                    onPressed: () {
+                      _fetchData();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('正在重新整理地址資料...'),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     ),
                   ),
                   // 新增地址按鈕
