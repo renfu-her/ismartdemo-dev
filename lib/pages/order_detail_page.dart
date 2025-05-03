@@ -436,7 +436,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget _buildShippingSection() {
     final name = '${_orderDetail['shipping_firstname'] ?? ''} ${_orderDetail['shipping_lastname'] ?? ''}'.trim();
     final cellphone = _orderDetail['shipping_cellphone'] ?? '';
-    final address = _orderDetail['shipping_address_format'] ?? '';
+    // final address = _orderDetail['shipping_address_format'] ?? '';
+    final address = (_orderDetail['shipping_postcode'] ?? '') + (_orderDetail['shipping_zone'] ?? '') + (_orderDetail['shipping_city'] ?? '') + (_orderDetail['shipping_address_1'] ?? '');
     final method = _orderDetail['shipping_method'] ?? '';
     
     return Column(
