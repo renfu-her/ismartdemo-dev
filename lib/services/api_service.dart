@@ -155,7 +155,7 @@ class ApiService {
       params['order'] = order;
     }
 
-    return _get('gws_products', extraParams: params);
+    return _get('gws_appproducts', extraParams: params);
   }
 
   // 獲取產品詳情
