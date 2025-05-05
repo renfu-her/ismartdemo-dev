@@ -1477,11 +1477,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     
     // 設置運費資訊
     if (shippingFee > 0) {
-      orderData['shipping_method'] = '一般運費';
-      orderData['shipping_code'] = 'shipping.regular';
+      orderData['shipping_method[title]'] = '一般運費';
+      orderData['shipping_method[code]'] = 'shipping.regular';
     } else {
-      orderData['shipping_method'] = '免運費';
-      orderData['shipping_code'] = 'shipping.free';
+      orderData['shipping_method[title]'] = '免運費';
+      orderData['shipping_method[code]'] = 'shipping.free';
     }
     
     // 構建訂單摘要
