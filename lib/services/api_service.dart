@@ -1118,7 +1118,7 @@ class ApiService {
       );
 
       await _writeOrderDebugToFile({
-        'formData': formData,
+        // 'formData': formData, // 不可序列化
         'orderData': orderData,
         'orderResponse': response.data,
       });
