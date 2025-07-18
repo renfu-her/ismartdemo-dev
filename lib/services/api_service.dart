@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 
 class ApiService {
   static const String _baseUrl =
-      'https://ismartdemo.com.tw/index.php?route=extension/module/api';
+      'https://rc168.com.tw/index.php?route=extension/module/api';
   static const String _apiKey =
       'CNQ4eX5WcbgFQVkBXFKmP9AE2AYUpU2HySz2wFhwCZ3qExG6Tep7ZCSZygwzYfsF';
 

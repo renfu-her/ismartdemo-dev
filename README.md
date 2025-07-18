@@ -1,164 +1,283 @@
-# iSmartDEMO - Flutter 電商應用
+# RC168 iSmartDEMO - Flutter 電商應用
 
-一個功能豐富的 Flutter 電商 App 範例，展示了商品瀏覽、多語言支援、API 整合、狀態管理等多種現代 App 開發實踐。
-
----
-
-## 目錄
-- [專案概觀](#專案概觀)
-- [主要功能](#主要功能)
-- [技術棧](#技術棧)
-- [專案結構](#專案結構)
-- [開始使用](#開始使用)
-- [潛在改進方向](#潛在改進方向)
-- [貢獻](#貢獻)
-- [授權](#授權)
+一個功能完整的 Flutter 跨平台電子商務應用程式，專為 RC168 電商平台設計。此專案展示了現代電商 App 的完整功能，包括商品瀏覽、購物車管理、用戶認證、訂單處理、多語言支援等核心功能。
 
 ---
 
-## 專案概觀
+## 📱 專案概觀
 
-iSmartDEMO 是一個使用 Flutter 開發的跨平台電子商務應用程式。它提供了一個完整的購物體驗，包括瀏覽不同類別的商品、查看詳細資訊、管理購物車和收藏夾，並支援多種語言介面。此專案旨在展示如何在 Flutter 中整合後端 API、處理複雜的 UI 互動和狀態管理。
+RC168 iSmartDEMO 是一個基於 Flutter 開發的專業電子商務應用程式，提供完整的線上購物體驗。此專案整合了 RC168 電商平台的 API，實現了從商品瀏覽到結帳的完整購物流程，並支援多種支付方式和用戶管理功能。
 
----
+### 🎯 主要特色
 
-## 主要功能
-
--   **多樣化的首頁展示**：
-    -   動態載入最新、特價、熱銷、推薦等多個商品區塊。
-    -   區塊標題 (`home_title`) 和顯示狀態 (`home_status`) 由 API 控制。
-    -   廣告橫幅輪播。
--   **產品瀏覽與詳情**：
-    -   商品列表頁，可依分類或搜尋結果顯示。
-    -   產品詳情頁：
-        -   圖片輪播 (`CarouselSlider`)。
-        -   豐富的產品描述（支援 HTML 渲染）。
-        -   多樣化的產品選項（單選按鈕 - 顏色/尺寸、下拉選單、日期時間選擇）。
-        -   選項與主圖片即時連動更新。
-        -   動態計算並格式化顯示價格（處理原價、特價、選項加價）。
-        -   根據 `dis_price` 狀態控制價格與購物車顯示。
-        -   庫存狀態顯示。
--   **購物車與收藏**：
-    -   用戶登入後可將商品加入購物車。
-    -   購物車內可調整數量、查看總價。
-    -   必填選項未選時提示用戶。
-    -   用戶登入後可將商品加入/移除收藏夾。
--   **本地化與國際化**：
-    -   支援繁體中文 (zh-TW) 和英文 (en-US) 語言。
-    -   預設語言為繁體中文。
-    -   日期與時間選擇器根據選定語言進行本地化顯示。
--   **用戶體驗**：
-    -   商品分享功能（複製連結、系統分享）。
-    -   統一的價格顯示格式。
-    -   基礎的錯誤處理（API 請求、圖片載入）。
-    -   Webview 元件用於顯示外部網頁內容。
+- **完整的電商功能**：商品瀏覽、購物車、結帳、訂單管理
+- **多語言支援**：繁體中文和英文介面
+- **響應式設計**：適配不同螢幕尺寸的設備
+- **現代化 UI/UX**：Material Design 3 設計語言
+- **跨平台支援**：iOS、Android、Web、Desktop
 
 ---
 
-## 技術棧
+## 🚀 主要功能
 
--   **框架**: Flutter (建議使用最新穩定版)
--   **語言**: Dart
--   **狀態管理**: `provider`
--   **網路請求**: `dio`
--   **UI 元件**: `carousel_slider`, `flutter_html`, `webview_flutter`
--   **本地化**: `flutter_localizations`
--   **本地存儲**: `shared_preferences`
--   **互動**: `url_launcher`, `share_plus`
--   **工具**: `flutter_launcher_icons`
+### 🏠 首頁功能
+- **動態商品展示**：最新商品、特價商品、熱銷商品、精選商品
+- **廣告橫幅輪播**：支援多張橫幅圖片輪播展示
+- **分類導航**：快速瀏覽不同商品分類
+- **搜尋功能**：全站商品搜尋
 
-詳細依賴請參閱 `pubspec.yaml`。
+### 📦 商品功能
+- **商品列表**：支援分類瀏覽、排序、篩選
+- **商品詳情**：
+  - 多圖輪播展示
+  - 詳細商品描述（支援 HTML 渲染）
+  - 多樣化商品選項（顏色、尺寸、日期等）
+  - 即時價格計算
+  - 庫存狀態顯示
+- **商品分享**：支援複製連結和系統分享
+
+### 🛒 購物功能
+- **購物車管理**：
+  - 添加/移除商品
+  - 數量調整
+  - 即時價格計算
+  - 商品選項驗證
+- **收藏夾**：用戶可收藏喜愛的商品
+- **結帳流程**：
+  - 地址管理
+  - 支付方式選擇
+  - 訂單確認
+
+### 👤 用戶功能
+- **用戶認證**：登入/註冊功能
+- **個人資料管理**：修改個人資訊
+- **訂單管理**：查看訂單歷史和詳情
+- **地址管理**：新增、編輯、刪除收貨地址
+
+### 💳 支付功能
+- **多種支付方式**：支援銀行轉帳等支付方式
+- **訂單追蹤**：查看訂單狀態和處理進度
+
+### 🌐 其他功能
+- **多語言支援**：繁體中文 (zh-TW) 和英文 (en-US)
+- **響應式設計**：適配不同螢幕尺寸
+- **離線支援**：本地數據緩存
+- **錯誤處理**：完善的錯誤提示和處理機制
 
 ---
 
-## 專案結構
+## 🛠 技術架構
 
+### 核心技術
+- **框架**：Flutter 3.7.0+
+- **語言**：Dart
+- **狀態管理**：Provider
+- **網路請求**：Dio
+- **本地存儲**：SharedPreferences
+
+### 主要依賴套件
+```yaml
+# UI 元件
+carousel_slider: ^5.0.0          # 輪播圖元件
+font_awesome_flutter: ^10.7.0    # 圖標庫
+flutter_html: ^3.0.0             # HTML 渲染
+
+# 網路和數據
+dio: ^5.8.0+1                    # HTTP 客戶端
+http: ^1.2.0                     # HTTP 請求
+
+# 狀態管理和本地化
+provider: ^6.1.2                 # 狀態管理
+flutter_localizations:           # 多語言支援
+shared_preferences: ^2.2.2       # 本地存儲
+
+# 平台整合
+webview_flutter: ^4.7.0          # WebView 支援
+url_launcher: ^6.2.5             # URL 啟動
+share_plus: ^10.1.4              # 分享功能
+permission_handler: ^11.4.0      # 權限管理
+
+# 工具
+flutter_launcher_icons: ^0.14.3   # App 圖標生成
+path_provider: ^2.1.5            # 路徑管理
+crypto: ^3.0.3                   # 加密功能
+```
+
+### 專案結構
 ```
 lib/
-├── main.dart                # App 入口, MaterialApp 設定, 首頁狀態管理
-├── pages/                   # 各個獨立頁面 (Screen/View)
-│   ├── home_page.dart         # (可能與 main.dart 中的 HomeContent 合併或作為容器)
-│   ├── product_list_page.dart
-│   ├── product_detail_page.dart
-│   ├── cart_page.dart
-│   ├── login_page.dart        # (假設存在)
-│   └── ...                  # 其他頁面
-├── services/                # 外部服務互動 (API, 本地存儲等)
-│   ├── api_service.dart     # 處理所有後端 API 請求
-│   └── user_service.dart    # 管理用戶登入狀態、收藏夾等
-├── widgets/                 # 可重用的 UI 元件
-│   ├── product_card.dart    # (範例)
-│   └── ...
-├── models/                  # 資料模型 (若有定義)
-├── utils/                   # 通用工具函式 (如價格格式化)
-assets/
-├── images/                  # App 內使用的靜態圖片
-├── ic_launcher.png          # App 啟動圖標原始檔
-pubspec.yaml                 # 專案設定、依賴管理、資源宣告
-README.md                    # 專案說明文件
+├── main.dart                    # 應用程式入口點
+├── pages/                       # 頁面元件
+│   ├── banner_page.dart         # 橫幅頁面
+│   ├── cart_page.dart           # 購物車頁面
+│   ├── category_page.dart       # 分類頁面
+│   ├── checkout_page.dart       # 結帳頁面
+│   ├── customer_profile_page.dart # 客戶資料頁面
+│   ├── favorite_page.dart       # 收藏頁面
+│   ├── login_page.dart          # 登入頁面
+│   ├── order_detail_page.dart   # 訂單詳情頁面
+│   ├── order_list_page.dart     # 訂單列表頁面
+│   ├── product_detail_page.dart # 商品詳情頁面
+│   ├── product_list_page.dart   # 商品列表頁面
+│   ├── profile_page.dart        # 個人資料頁面
+│   ├── register_page.dart       # 註冊頁面
+│   └── search_page.dart         # 搜尋頁面
+├── services/                    # 服務層
+│   ├── api_service.dart         # API 服務
+│   ├── ecpay_service.dart       # 金流服務
+│   └── user_service.dart        # 用戶服務
+└── widgets/                     # 可重用元件
 ```
 
 ---
 
-## 開始使用
+## 🚀 開始使用
 
-**環境要求:**
+### 環境要求
+- **Flutter SDK**：3.7.0 或更高版本
+- **Dart SDK**：3.0.0 或更高版本
+- **開發工具**：Android Studio / VS Code with Flutter plugin
+- **設備**：實體設備或模擬器
 
--   Flutter SDK (請參考 [官方安裝指南](https://flutter.dev/docs/get-started/install))
--   Dart SDK (隨 Flutter 安裝)
--   開發工具 (Android Studio / VS Code with Flutter plugin)
--   實體設備或模擬器
+### 安裝步驟
 
-**安裝與執行:**
+1. **克隆專案**
+   ```bash
+   git clone <repository-url>
+   cd rc168-dev/test
+   ```
 
-1.  **取得專案:**
-    ```bash
-    git clone <YOUR_REPOSITORY_URL>
-    cd iSmartDEMO
-    ```
+2. **安裝依賴**
+   ```bash
+   flutter pub get
+   ```
 
-2.  **安裝依賴:**
-    ```bash
-    flutter pub get
-    ```
+3. **配置 API**
+   - 確保 `lib/services/api_service.dart` 中的 API 端點配置正確
+   - 檢查 API Key 是否有效
 
-3.  **執行 App:**
-    ```bash
-    flutter run
-    ```
+4. **執行應用程式**
+   ```bash
+   flutter run
+   ```
 
-4.  **(可選) 生成 App 圖標:** (若 `assets/ic_launcher.png` 有修改)
-    ```bash
-    flutter pub run flutter_launcher_icons
-    ```
+5. **生成 App 圖標**（可選）
+   ```bash
+   flutter pub run flutter_launcher_icons
+   ```
 
----
+### 平台特定設定
 
-## 潛在改進方向
+#### Android
+- 最低 SDK 版本：21
+- 目標 SDK 版本：33
+- 支援 ARM64 架構
 
-此專案雖功能完善，但仍有以下可持續優化的方向：
+#### iOS
+- 最低 iOS 版本：12.0
+- 支援 iPhone 和 iPad
 
-1.  **狀態管理精煉**: 對於複雜頁面（如 `ProductDetailPage` 或 `HomeContent`），考慮將更多 UI 狀態和業務邏輯遷移到 `Provider` 或其他狀態管理方案 (如 Riverpod, Bloc)，減少 `setState` 的使用，提高可測試性和可維護性。
-2.  **錯誤處理強化**: 建立更一致、用戶友好的錯誤處理機制，例如統一的 API 錯誤提示、網絡異常處理、空狀態顯示等。
-3.  **代碼模組化**: 將大型 Widget（如 `ProductDetailPage` 中的選項區塊、首頁的各個商品列表）拆分成更小的、獨立的 Widget，提高代碼複用性和可讀性。
-4.  **測試覆蓋**: 增加單元測試（針對 Service、Utils）和 Widget 測試（針對核心 UI 元件和頁面），確保代碼品質與功能穩定。
-5.  **依賴更新**: 定期使用 `flutter pub outdated` 檢查並更新依賴套件。
-6.  **效能優化**: 對於長列表或複雜計算，評估是否存在效能瓶頸，並進行相應優化。
-
----
-
-## 貢獻
-
-歡迎透過 Pull Request 或 Issue 為此專案做出貢獻。
-
-1.  Fork 此儲存庫。
-2.  建立您的 Feature 分支 (`git checkout -b feature/AmazingFeature`)。
-3.  提交您的變更 (`git commit -m 'Add some AmazingFeature'`)。
-4.  將變更推送到分支 (`git push origin feature/AmazingFeature`)。
-5.  開啟一個 Pull Request。
+#### Web
+- 支援現代瀏覽器
+- 響應式設計適配桌面和行動裝置
 
 ---
 
-## 授權
+## 🔧 開發指南
 
-本專案採用 MIT 授權。詳情請參閱 `LICENSE` 文件（如果存在）。
+### 代碼規範
+- 遵循 Flutter 官方代碼規範
+- 使用 `flutter_lints` 進行代碼檢查
+- 保持代碼註釋和文檔的完整性
+
+### 狀態管理
+- 使用 Provider 進行狀態管理
+- 將業務邏輯與 UI 分離
+- 保持狀態的可預測性和可測試性
+
+### API 整合
+- 所有 API 請求通過 `ApiService` 統一管理
+- 實現錯誤處理和重試機制
+- 支援離線數據緩存
+
+### 本地化
+- 支援繁體中文和英文
+- 使用 `flutter_localizations` 進行本地化
+- 日期、時間、數字格式本地化
+
+---
+
+## 📱 功能展示
+
+### 主要頁面
+1. **首頁**：商品展示、橫幅輪播、分類導航
+2. **商品列表**：分類瀏覽、搜尋、排序、篩選
+3. **商品詳情**：圖片輪播、選項選擇、加入購物車
+4. **購物車**：商品管理、數量調整、價格計算
+5. **結帳**：地址選擇、支付方式、訂單確認
+6. **個人中心**：用戶資料、訂單歷史、設定
+
+### 特色功能
+- **響應式設計**：適配不同螢幕尺寸
+- **多語言支援**：無縫切換語言
+- **離線支援**：本地數據緩存
+- **錯誤處理**：用戶友好的錯誤提示
+
+---
+
+## 🔮 未來規劃
+
+### 短期目標
+- [ ] 增加更多支付方式
+- [ ] 優化圖片載入效能
+- [ ] 增加推播通知功能
+- [ ] 完善錯誤處理機制
+
+### 長期目標
+- [ ] 增加社交功能（評論、評分）
+- [ ] 實現 AR 商品預覽
+- [ ] 增加語音搜尋功能
+- [ ] 支援更多語言
+
+---
+
+## 🤝 貢獻指南
+
+我們歡迎所有形式的貢獻！請遵循以下步驟：
+
+1. **Fork 專案**
+2. **建立功能分支** (`git checkout -b feature/AmazingFeature`)
+3. **提交變更** (`git commit -m 'Add some AmazingFeature'`)
+4. **推送到分支** (`git push origin feature/AmazingFeature`)
+5. **開啟 Pull Request**
+
+### 貢獻類型
+- 🐛 Bug 修復
+- ✨ 新功能開發
+- 📝 文檔改進
+- 🎨 UI/UX 優化
+- ⚡ 效能優化
+
+---
+
+## 📄 授權
+
+本專案採用 MIT 授權條款。詳情請參閱 [LICENSE](LICENSE) 文件。
+
+---
+
+## 📞 聯絡資訊
+
+- **專案維護者**：RC168 開發團隊
+- **技術支援**：請透過 Issue 或 Pull Request 聯絡
+- **商業合作**：請直接聯絡 RC168 團隊
+
+---
+
+## 🙏 致謝
+
+感謝所有為此專案做出貢獻的開發者和測試者！
+
+---
+
+*最後更新：2024年12月*

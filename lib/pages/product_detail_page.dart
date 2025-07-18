@@ -58,7 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           if (_carouselImages.isNotEmpty) {
             _currentImage = _carouselImages[0].startsWith('http')
                 ? _carouselImages[0]
-                : 'https://ismartdemo.com.tw/image/${_carouselImages[0]}';
+                : 'https://rc168.com.tw/image/${_carouselImages[0]}';
           }
         });
 
@@ -78,7 +78,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               if (_carouselImages.isNotEmpty) {
                 _currentImage = _carouselImages[0].startsWith('http')
                     ? _carouselImages[0]
-                    : 'https://ismartdemo.com.tw/image/${_carouselImages[0]}';
+                    : 'https://rc168.com.tw/image/${_carouselImages[0]}';
               }
               _initializeOptions();
             });
@@ -496,7 +496,7 @@ $productName
                                             child: Image.network(
                                               image.startsWith('http')
                                                   ? image
-                                                  : 'https://ismartdemo.com.tw/image/$image',
+                                                  : 'https://rc168.com.tw/image/$image',
                                               fit: BoxFit.contain,
                                               errorBuilder: (context, error, stackTrace) {
                                                 return const Center(
@@ -880,7 +880,7 @@ $productName
                   ? Image.network(
                       imageUrl.startsWith('http')
                           ? imageUrl
-                          : 'https://ismartdemo.com.tw/image/$imageUrl',
+                          : 'https://rc168.com.tw/image/$imageUrl',
                       width: 24,
                       height: 24,
                       fit: BoxFit.cover,
@@ -931,7 +931,7 @@ $productName
                       : selectedValue['disname'] ?? '';
                   String imageUrl = selectedValue['image'] ?? '';
                   if (imageUrl.isNotEmpty && !imageUrl.startsWith('http')) {
-                    imageUrl = 'https://ismartdemo.com.tw/image/$imageUrl';
+                    imageUrl = 'https://rc168.com.tw/image/$imageUrl';
                   }
 
                   return Row(
@@ -991,7 +991,7 @@ $productName
                   ? Image.network(
                       imageUrl.startsWith('http')
                           ? imageUrl
-                          : 'https://ismartdemo.com.tw/image/$imageUrl',
+                          : 'https://rc168.com.tw/image/$imageUrl',
                       width: 24,
                       height: 24,
                       fit: BoxFit.cover,
@@ -1040,7 +1040,7 @@ $productName
                       : selectedValue['disname'] ?? '';
                   String imageUrl = selectedValue['image'] ?? '';
                   if (imageUrl.isNotEmpty && !imageUrl.startsWith('http')) {
-                    imageUrl = 'https://ismartdemo.com.tw/image/$imageUrl';
+                    imageUrl = 'https://rc168.com.tw/image/$imageUrl';
                   }
 
                   return Row(
@@ -1323,7 +1323,7 @@ $productName
                         child: Image.network(
                           imageUrl.startsWith('http')
                               ? imageUrl
-                              : 'https://ismartdemo.com.tw/image/$imageUrl',
+                              : 'https://rc168.com.tw/image/$imageUrl',
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(
@@ -1375,7 +1375,7 @@ $productName
                     child: Image.network(
                       selectedImage.startsWith('http')
                           ? selectedImage
-                          : 'https://ismartdemo.com.tw/image/$selectedImage',
+                          : 'https://rc168.com.tw/image/$selectedImage',
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
@@ -1534,7 +1534,7 @@ $productName
       setState(() {
         String fullImageUrl = newImage.startsWith('http')
             ? newImage
-            : 'https://ismartdemo.com.tw/image/$newImage';
+            : 'https://rc168.com.tw/image/$newImage';
         
         _currentImage = fullImageUrl;
         
@@ -1552,7 +1552,7 @@ $productName
       if (index < _carouselImages.length) {
         _currentImage = _carouselImages[index].startsWith('http')
             ? _carouselImages[index]
-            : 'https://ismartdemo.com.tw/image/${_carouselImages[index]}';
+            : 'https://rc168.com.tw/image/${_carouselImages[index]}';
       }
     });
   }
